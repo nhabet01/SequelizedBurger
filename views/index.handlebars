@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="shortcut icon" href="static/assets/images/burger_icon.jpg">
+<link rel="stylesheet" href="static/assets/css/style.css">
+<div class = "container">
+<br>
+      <!-- Burger Image -->
+  <center>
+    <div class="row">
+      <img id="burger_pic" src="static/assets/images/burger_center.jpg">
+    </div>
+  </center>
+    <div class="row">
+        <div class="col-md-12 text-center" id="top-bar">
+            <h1>Eat Da Burger</h1>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <!-- Empty Div to help center textarea -->
+        <div class="col-md-3"></div> 
+        
+        <div class="col-sm-6 text-center enter_section">
+        <h3>Create your signature burger!</h3>
+        <form action="/burgers/create" method="POST">
+            <input type="text" name="burger_name" class = "form-control" value="" id = "enter_text" required="true">
+            <button type="submit" class="btn btn-warning btn-lg">Create Burger</button>
+        </form>
+        
+        </div>
+        <!-- Empty Div to help center textarea -->
+        <div class="col-md-3"></div> 
+    </div>
+
+<div class="container">
+    
+    <div class="row">  
+        <div class="col-md-6 text-center" class="uneaten">
+            <h3>Come and Get It!</h3>
+            <ul> 
+                {{#each burgers}}
+                {{!-- #unless acts like "if false"...so, if devoured = false (tried !this.devoured but didn't work) --}}
+                    {{#unless this.devoured}}
+                    <div >
+                        <h4 class="well">{{this.burger_name}}</h4>                  
+                        <form method="POST" action="/api/customer/{{this.id}}?_method=PUT" class="button-size">
+                            <label for="customer_name"></label>
+                            <input type="text" name="customer_name" maxlength="25" placeholder="Customer Name" required>
+                            <input type="hidden" name="devoured"  value="true">
+                            <button type="submit" class="btn btn-danger btn-sm">Devour!</button>
+                        </form>
+                    </div>                
+                    {{/unless}}
+                {{/each}}
+            </ul>
+        </div>
+
+        <div class = "col-md-6 text-center" class = "devoured">
+            <h3>Already Devoured!</h3>
+            <ul> 
+            {{#each burgers}}
+                {{#if this.devoured}}
+                {{!-- checks if devoured = true --}}
+                <h4 class="well">{{this.burger_name}} (Eaten by: {{this.Customer.customer_name}})<h4>
+                 <form action="/api/reorder/{{this.id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="devoured" value="false">
+                    <button type="submit" class="btn btn-danger btn-sm">Re-order!</button>
+                </form>
+
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+

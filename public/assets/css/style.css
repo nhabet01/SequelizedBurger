@@ -1,0 +1,33 @@
+#burger_pic {
+    max-width: 250px;
+    max-height: 200px;
+    opacity: 0.8;
+}
+
+body {
+    background: url('../images/diner_bckgrnd.jpg') no-repeat;
+
+    margin: 0;
+  
+    background-size: cover;
+    font: 'Open Sans', sans-serif;
+    color: rgb(216, 246, 36);
+}
+/*body,background-image {
+    opacity: 0.8;
+}*/
+
+/*background-image: url('../images/diner_bckgrnd.jpg') no-repeat; */
+
+.well {
+    opacity: 0.6;
+    font-weight: bolder;
+    color: #8e0808;
+    
+}
+
+h3 {
+    font-weight: bolder;
+    /*background-color: #dae2e7;
+    opacity: 0.7;*/
+}

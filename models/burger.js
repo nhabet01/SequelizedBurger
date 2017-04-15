@@ -11,12 +11,22 @@ module.exports = function(sequelize, DataTypes) {
             unique: {
                 msg: "Burgername already exists"
 
+            },
+            validate: {
+                notEmpty:{
+                    msg:'Cannot have an empty field for burger name'
+                }
             }
         },
 
         devoured: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false,
+            defaultValue: false
+        },
+
+        customer: {
+            type: DataTypes.STRING,
+            allowNull:true
         }
  
     },  {

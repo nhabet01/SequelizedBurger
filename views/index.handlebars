@@ -21,6 +21,9 @@
         
         <div class="col-sm-6 text-center enter_section">
         <h3>Create your signature burger!</h3>
+        {{#if nullError}}
+        <h4 class = "nullError">{{nullError}}</h4>
+        {{/if}}
         <form action="/burgers/create" method="POST">
             <input type="text" name="burger_name" class = "form-control" value="" id = "enter_text" required="true">
             <button type="submit" class="btn btn-warning btn-lg">Create Burger</button>
@@ -40,15 +43,15 @@
                 {{#each burgers}}
                 {{!-- #unless acts like "if false"...so, if devoured = false (tried !this.devoured but didn't work) --}}
                     {{#unless this.devoured}}
-                    <div >
+                    <li >
                         <h4 class="well">{{this.burger_name}}</h4>                  
                         <form method="POST" action="/api/customer/{{this.id}}?_method=PUT" class="button-size">
                             <label for="customer_name"></label>
-                            <input type="text" name="customer_name" maxlength="25" placeholder="Customer Name" required>
+                            <input type="text" class="form-control" name="customer_name" maxlength="25" placeholder="Customer Name" required>
                             <input type="hidden" name="devoured"  value="true">
                             <button type="submit" class="btn btn-danger btn-sm">Devour!</button>
                         </form>
-                    </div>                
+                    </li>                
                     {{/unless}}
                 {{/each}}
             </ul>
@@ -60,7 +63,7 @@
             {{#each burgers}}
                 {{#if this.devoured}}
                 {{!-- checks if devoured = true --}}
-                <h4 class="well">{{this.burger_name}} (Eaten by: {{this.Customer.customer_name}})<h4>
+                <h4 class="well">{{this.burger_name}} (Eaten by: {{this.customer}})<h4>
                  <form action="/api/reorder/{{this.id}}?_method=PUT" method="POST">
                     <input type="hidden" name="devoured" value="false">
                     <button type="submit" class="btn btn-danger btn-sm">Re-order!</button>
@@ -68,6 +71,7 @@
 
                 {{/if}}
             {{/each}}
+            {{!-- <ul> --}}
         </div>
     </div>
 </div>

@@ -6,10 +6,25 @@ module.exports = function(sequelize, DataTypes) {
             
             customer_name: {
                 type: DataTypes.STRING(35),
-                allowNull: false
+                allowNull: false,
+                validate: {
+                    notEmpty: {
+                        msg: 'This field cannot be empty'
+                    }
+                }
             }
          
-        });
+        },
+        {
+            classMethods: {
+                associate: function(models){
+                    Customer.hasMany(models.Burger,{
+                        onDelete: "cascade"
+                    });
+                }
+            }
+        }
+    );
 
     // Return the model we defined.
     return Customer;

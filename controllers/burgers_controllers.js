@@ -10,7 +10,7 @@ var path = require('path');
 router.get('/', function(req,res){
     db.Burger.findAll({
         order: 'burger_name ASC',
-        // include: [{model:db.Customer, required: false}]//don't think include isnecessary here
+        
     }).then(function(burger_data){
 
         var hbsObject ={
@@ -22,11 +22,16 @@ router.get('/', function(req,res){
 
 //When we post/insert a burger, we call Sequelize's create method and then get redirected to '/'...which then renders all burgers
 router.post('/burgers/create', function(req,res){
-    db.Burger.create({
-        burger_name:req.body.burger_name
-    }).then(function(){
-            res.redirect('/');
+    if(req.body.burger_name.trim()===""){
+       res.redirect('/');
+    }else{
+
+        db.Burger.create({
+            burger_name:req.body.burger_name
+        }).then(function(){
+                res.redirect('/');
         });
+    }
         //by redirecting to '/' we call the findAll to render the burgers on the page
 });//end post (Create)
 
@@ -36,12 +41,14 @@ router.put('/api/customer/:id', function(req,res){
     db.Customer.create({
         customer_name: customer
     }).then(function(data) {
+        console.log("data after customer created: ")
+        // console.log(data);
         var devoured = true;
         // var ID = req.params.id;
 
         db.Burger.update({
             devoured: devoured,
-            CustomerId: data.id},//see where CustomerId created
+            customer: data.dataValues.customer_name},//see where CustomerId created
             {where: {id: req.params.id}}
         ).then(function() {
             res.redirect('/');
@@ -58,7 +65,7 @@ router.put('/api/reorder/:id', function (req, res) {
 
     db.Burger.update(
         {devoured: devoured,
-        CustomerId: null},
+        customer: null},
         {where: {id: req.params.id}}
     ).then(function () {
         res.redirect('/');

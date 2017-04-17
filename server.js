@@ -31,7 +31,8 @@ app.set("view engine", "handlebars");
 // Routes 
 //=============================================================
 //////
-var routes = require("./controllers/burgers_controllers.js");
+// var routes = require("./controllers/burgers_controllers.js");
+var routes = require("./controllers/controllers2.js");//pics don't get rendered
 
 app.use('/', routes);
 

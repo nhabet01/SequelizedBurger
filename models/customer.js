@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
                 allowNull: false,
                 validate: {
                     notEmpty: {
-                        msg: 'This field cannot be empty'
+                        msg: 'Customer field cannot be empty'
                     }
                 }
             }

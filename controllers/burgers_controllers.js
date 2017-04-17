@@ -48,7 +48,7 @@ router.put('/api/customer/:id', function(req,res){
 
         db.Burger.update({
             devoured: devoured,
-            customer: data.dataValues.customer_name},//see where CustomerId created
+            customer: data.dataValues.customer_name},
             {where: {id: req.params.id}}
         ).then(function() {
             res.redirect('/');
@@ -74,8 +74,9 @@ router.put('/api/reorder/:id', function (req, res) {
 
 //================ If users attempt to access a non existent page, take back to index====================
 router.use(function(req, res) {
+    res.redirect('/');
 
-    res.render(path.join(__dirname, "/../views/index.handlebars"));
+    // res.render(path.join(__dirname, "/../views/index.handlebars"));
 });
 
 

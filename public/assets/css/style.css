@@ -32,3 +32,8 @@ h3 {
     /*background-color: #dae2e7;
     opacity: 0.7;*/
 }
+
+.nullError {
+    font-weight: bold;
+    color: red;
+}
